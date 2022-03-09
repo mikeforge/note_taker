@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const file = require('./db/db.json');
+const { v4: uuidv4 } = require('uuid');
 
 const port = process.env.PORT || 3001
 
@@ -22,12 +23,14 @@ app.get('/api/notes', (req,res) => {
     let rawJson = fs.readFileSync('./db/db.json');
     console.log(rawJson)
     console.log(JSON.parse(rawJson))
-})
+    res.sendFile(path.join(__dirname, './db/db.json'));
+});
 
 app.post('/api/notes', (req, res) => {
     fs.readFile('./db/db.json', (err, data) => {
         if (err) throw err;
         let note = req.body;
+        note.id = uuidv4();
         console.log(`this is the req.body: ${req.body}`);
         file.push(note);
 
