@@ -22,3 +22,9 @@ app.get('/api/notes', (req,res) => {
     console.log(rawJson)
     console.log(JSON.parse(rawJson))
 })
+
+
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/notes.html'))
+});
+
